@@ -1,0 +1,6 @@
+﻿0.1 simple version 29-10-2015
+0.2 new map fulfill requisites 30-10-2015
+0.23 mobile enchanced code
+0.24 fixed some in game errors
+hi-score to peform on the future versions
+Luis J. Mariscal jacob_mf@yahoo.es
