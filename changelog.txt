@@ -1,6 +1,36 @@
-﻿0.1 simple version 29-10-2015
+﻿Luis J. Mariscal jacob_mf@yahoo.es
+0.1 simple version 29-10-2015
 0.2 new map fulfill requisites 30-10-2015
 0.23 mobile enchanced code
 0.24 fixed some in game errors
-hi-score to peform on the future versions
+0.25 simple click to place marker 1-11-2015
+0.26 spanish version, es_ES; change original to lang en_EN
+Spanish, change marker to normal, circle, polygon colours, little map
+	   check if add place marker to initialize, looks work same
+	   hi-score feature, txt file in <aside>, table
+Checking add bootstrap framework http://getbootstrap.com/2.3.2/customize.html
+http://getbootstrap.com/2.3.2/base-css.html 2-11-15
+0.27 
+http://bootsnipp.com/snippets/vvb3j
+0.28 hi-scores version 10 places, php support 8-11-2015
+http://stackoverflow.com/questions/14542127/how-to-write-a-json-file-with-php
+http://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.js
+http://stackoverflow.com/questions/6323338/jquery-ajax-posting-json-to-webservice
+0.29 English bootstrap
+		Modal?? hiscore on center, down;double modal?? horrible; return false? Nop? event.R? no; show? nada
+		buttons only one at time... ok
+		center html; ok
+		button saving...? No
+		custom compare ok
+		new flag? better choose
+		no matter if no POST, still modal quickly dissapears
+		optimization
+		disable click events, buttons
+0.30 Spanish /es work 	
+https://developers.google.com/webmasters/mobile-sites/mobile-seo/overview/key-points?hl=es
+https://www.google.com/webmasters/tools/mobile-friendly/?url=http%3A%2F%2Flocate-european-cities-quiz.eu.pn%2Fes
+		
+http://locate-european-cities-quiz.eu.pn/index.html
+http://locate-european-cities-quiz.eu.pn/index_boot-en.html
+http://cp1.freehostingeu.com/beta/login/?next=file-manager&notice=login
 Luis J. Mariscal jacob_mf@yahoo.es

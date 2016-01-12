@@ -23,7 +23,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> 
 	<script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script> 
-	<script src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry" type="text/javascript"></script>
+	<script src="http://maps.google.com/maps/api/js?libraries=geometry" type="text/javascript"></script>
 	<noscript><h2 class="text-center">Lo siento, esta página requiere de JavaScript</h2></noscript>
 	<!-- <script src="js/g-maps.js"></script> -->
 	<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -104,12 +104,45 @@
 		    </aside>
 		  </div>
 		</div>
-	</article>	
+	</article>
+	<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" id= "close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Información</h3>
+  </div>
+  <div class="modal-body">
+    <p>En breve se reiniciará la página... </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" id = "close" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+  </div>
+</div>
+	<!-- Modal 
+	<div class="modal hide" id="myModal" aria-hidden="true" > <!-- role="dialog"> -->
+    <!--  <div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" data-target="#myModal">&times;</button>
+				<h4 class="modal-title">Información</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-info fade in" id="myAlert">
+				   <a href="#" class="close" data-dismiss="alert">&times;</a>
+					<p> <strong>¡Actualizada!</strong> La tabla de clasificaciones históricas se ha modificado </p>
+				</div>	
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" data-target="#myModal">Close</button>
+			</div>
+        </div>
+      </div>
+	</div> --> 
 	<footer class ="well text-center">
 	  <div class="row-fluid">
 	    <div class="span2"> </div>
   	    <div class="span8">
-	     <p class="muted">© 2015 Snk Corp. Todos los derechos reservados. Información de contacto: <a class="muted" href="mailto:hkm_snk@yahoo.es"> hkm_snk@yahoo.es</a> Versión 0.27</p>  	  
+	     <p class="muted">© 2015 Snk Corp. Todos los derechos reservados. Información de contacto: <a class="muted" href="mailto:hkm_snk@yahoo.es"> hkm_snk@yahoo.es</a> Versión 0.28</p>  	  
 	    </div>
 	  </div>
 	</footer>

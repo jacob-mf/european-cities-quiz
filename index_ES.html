@@ -46,7 +46,7 @@ body {font-family: Verdana, sans-serif; font-size:0.8em;}
 header, section, footer, aside, nav, main, article, figure {
     display: block;
 } 
-header, nav, article, footer
+header, nav, footer
 {border:1px solid grey; margin:5px; padding:8px;text-align:center;}
 h2
 { background-color: LightGrey; border:1px solid grey; margin:5px; padding:3px;text-align:center; } 
@@ -55,11 +55,12 @@ h3, button
 td, tr {
 margin:5px; padding:3px;text-align:center;font-weight: bold;
 }
-section{
-float: left;width: 79%;
-}
+section 
+{margin:5px; padding:3px;text-align:center;}
+article{
+float: left;width: 68%;}
 aside
-{float: right;width: 20%;padding-left: 10px;margin: 0 0 2px 0px;}
+{float: right;width: 31%;margin: 0 0 2px 2px;}
 
 footer {clear:both !important;}
 nav ul {margin:0; padding:0;}
@@ -72,41 +73,49 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
   0%     { opacity: 0 } 50% { opacity: 0 }
   50.01% { opacity: 1 } 100% { opacity: 1 }
 }
- 
+<!--  
 blink {
   -webkit-animation: blink 0.7s infinite linear alternate;
   -webkit-font-smoothing: antialiased;
-}
+} -->
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"> </script>
 </head> 
 <body> 
 <header>
   <h1 >Juego de localizar ciudades europeas en el mapa</h1>
-</header>
-<section>
+
+  </header>
+  <section>
 <h2 id="cities-score"> </h2> 
 <h2 id="kms-score" > </h2>
-<h3> Posiciona el marcador (con click del ratón) sobre la ciudad de</h3>
-<h3 id="current-city"> ... <button id="startBtn">Comenzar juego</button> </h3>
+  </section>
+  <article style="text-align:right">
+<h3 > Posiciona el marcador (con click del ratón) sobre la ciudad de</h3>
+<h3 id="current-city" > ... <button id="startBtn">Comenzar juego</button> </h3>
  <!-- a  <div id="div1" style="display: none;"></div>  -->
-   <div id="map" style="width: 370px; height: 270px;margin:5px auto;"></div>
-</section>
+   <div id="map" style="width: 470px; height: 330px;margin:5px auto;"></div>
+</article>
   <aside>
  <!-- aside content goes in here -->
-<h3 id="hi-score"> </h3>
+<h3 id="hi-score" style="text-align:left"> </h3>
  <table id="hi-scores">
   <tr id="score-row" style="text-align:left"> </tr> 
   <tr id="top-scorer">  </tr>
 </table>  
-<blink> <h3 id="new-hi"> </h3> </blink>
-<h3 id="score-form"> </h3>
+<h3 id="hall-fame" style="text-align:left"> </h3>
+ <table id="history">
+  <tr id="history-row" style="text-align:left"> </tr> 
+  <tr id="top-1">  </tr> <tr id="top-2">  </tr> <tr id="top-3">  </tr> <tr id="top-4">  </tr> <tr id="top-5">  </tr> <tr id="top-6">  </tr> <tr id="top-7">  </tr>
+  <tr id="top-8">  </tr> <tr id="top-9">  </tr> <tr id="top-10">  </tr>
+</table>  
 </aside>
    
 <script type="text/javascript">  
    var myCenter=new google.maps.LatLng(51.508742,14.120850);
    var markers =[]; // list of markers
-     var myStyle = [ { "stylers": [ { "visibility": "off" } ] },{ "featureType": "water", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] },{ "featureType": "administrative.country", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] } ];
+     var myStyle = [ { "stylers": [ { "visibility": "off" } ] },{ "featureType": "water", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] } ];
+	 // ,{ "featureType": "administrative.country", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] } // add country borders
 	 var map = new google.maps.Map(document.getElementById('map'), {
        mapTypeControlOptions: {
          mapTypeIds: ['mystyle', google.maps.MapTypeId.SATELLITE]
@@ -169,10 +178,12 @@ function detectBrowser() {
 detectBrowser();
 google.maps.event.addDomListener(window, 'load', initialize);
 </script> 
-<section>
+<article>
 <h3 id="gameStatus">  </h3>
 <h3 id="gameInfo">  </h3>
-</section>
+<blink> <h3 id="new-hi"> </h3> </blink>
+<h3 id="score-form"> </h3>
+</article>
 <footer>
  <p>© 2015 Snk Corp. Todos los derechos reservados. Información de contacto: <a href="mailto:hkm_snk@yahoo.es"> hkm_snk@yahoo.es</a> Versión 0.26</p>  
 </footer>
@@ -201,6 +212,26 @@ $(document).ready(function(){
 document.getElementById("gameStatus").innerHTML = ' <button id="placeBtn" > comprobar</button> ' ; //style="float":right; margin-right: 490px 
 start = document.getElementById("placeBtn");
 start.addEventListener("click", checkLocation);
+}
+function loadHallOfFame(){
+var maxPLayers;
+$(document).ready(function(){
+    $.getJSON("hallOfFame.json", function(result){  
+		$.each(result, function(i, field){
+        $("#top-1").html('<td> ' + field[0].name.toString() + '</td>' + '<td> ' + field[0].cities.toString() + '</td>' + '<td> ' + field[0].kms.toString() + '</td>' + '<td> ' + field[0].date.toString() + '</td>' );
+		$("#top-2").html('<td> ' + field[1].name.toString() + '</td>' + '<td> ' + field[1].cities.toString() + '</td>' + '<td> ' + field[1].kms.toString() + '</td>' + '<td> ' + field[1].date.toString() + '</td>' );
+		$("#top-3").html('<td> ' + field[2].name.toString() + '</td>' + '<td> ' + field[2].cities.toString() + '</td>' + '<td> ' + field[2].kms.toString() + '</td>' + '<td> ' + field[2].date.toString() + '</td>' );
+		$("#top-4").html('<td> ' + field[3].name.toString() + '</td>' + '<td> ' + field[3].cities.toString() + '</td>' + '<td> ' + field[3].kms.toString() + '</td>' + '<td> ' + field[3].date.toString() + '</td>' );
+		$("#top-5").html('<td> ' + field[4].name.toString() + '</td>' + '<td> ' + field[4].cities.toString() + '</td>' + '<td> ' + field[4].kms.toString() + '</td>' + '<td> ' + field[4].date.toString() + '</td>' );
+		$("#top-6").html('<td> ' + field[5].name.toString() + '</td>' + '<td> ' + field[5].cities.toString() + '</td>' + '<td> ' + field[5].kms.toString() + '</td>' + '<td> ' + field[5].date.toString() + '</td>' );
+		$("#top-7").html('<td> ' + field[6].name.toString() + '</td>' + '<td> ' + field[6].cities.toString() + '</td>' + '<td> ' + field[6].kms.toString() + '</td>' + '<td> ' + field[6].date.toString() + '</td>' );
+		$("#top-8").html('<td> ' + field[7].name.toString() + '</td>' + '<td> ' + field[7].cities.toString() + '</td>' + '<td> ' + field[7].kms.toString() + '</td>' + '<td> ' + field[7].date.toString() + '</td>' );
+		$("#top-9").html('<td> ' + field[8].name.toString() + '</td>' + '<td> ' + field[8].cities.toString() + '</td>' + '<td> ' + field[8].kms.toString() + '</td>' + '<td> ' + field[8].date.toString() + '</td>' );
+		$("#top-10").html('<td> ' + field[9].name.toString() + '</td>' + '<td> ' + field[9].cities.toString() + '</td>' + '<td> ' + field[9].kms.toString() + '</td>' + '<td> ' + field[9].date.toString() + '</td>' );
+		maxPlayers= field.length;
+        });
+    });
+});
 }
 function checkLocation() {
 var live =0; // flag if continue playing
@@ -286,16 +317,28 @@ myGoal.setMap(null);
 myLine.setMap(null);
 startGame();
 }
+function getName() {
+var top = document.getElementById("i-name").value;
+localStorage.setItem("name", top);
+}
+function getDate(){
+var date = new Date();
+//var datestring = ('0000' + date.getFullYear()).slice(-4) + '-' + ('00' + (date.getMonth() + 1)).slice(-2) + '-' + ('00' + date.getDate()).slice(-2) + 'T'+  ('00' +  date.getHours()).slice(-2) + ':'+ ('00' + date.getMinutes()).slice(-2) +'Z';
+return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+}
 function checkScore() {
 if (typeof(Storage) !== "undefined") {
     // Check
     if ((localStorage.getItem("cities") < score) || ((localStorage.getItem("cities") == score) && (localStorage.getItem("kilometers") < kms))) {
 		document.getElementById("new-hi").innerHTML = "¡¡Nuevo record!!";
-		document.getElementById("score-form").innerHTML = '<form action="">Nombre: <input id = "i-name" type="text"  maxlength="9"></form>';
+		document.getElementById("score-form").innerHTML = '<form id = "f-name" action=""> Nombre: <input id="i-name" type="text" name="i-name"  pattern=".{3,}"  required title="al menos 3 caracteres" maxlength="9"> <button id="getNameBtn" onclick="getName()" > Salvar </button> </form> ';
 		// Store
 		localStorage.setItem("cities", score);
 		localStorage.setItem("kilometers", kms);
-		localStorage.setItem("name", document.getElementById("i-name").value);
+		localStorage.setItem("date", getDate());
+		var iname = document.getElementById("i-name").value;
+		localStorage.setItem("name", iname);
+		document.getElementById("gameInfo").innerHTML = iname;
     } 
 } else {
     document.getElementById("hi-score").innerHTML = "Lo siento, no hay ranking ya que tu navegador no soporta almacenamiento web...";
@@ -308,14 +351,20 @@ if (typeof(Storage) !== "undefined") {
    localStorage.setItem("name", "Snk");
    localStorage.setItem("cities", "0");
    localStorage.setItem("kilometers", "0");
+   localStorage.setItem("date", getDate());
    }
     // Retrieve
-  document.getElementById("hi-score").innerHTML =  " MEJOR PUNTUACIÓN ";
-  document.getElementById("score-row").innerHTML = '<td> ' +" NOMBRE " +  '</td> <td> ' + " CIUDADES "+ '</td> <td> ' + "  KILÓMETROS "+ '</td> ';
-  document.getElementById("top-scorer").innerHTML = '<td> ' + localStorage.getItem("name") + '</td> <td> ' + localStorage.getItem("cities") + '</td> <td> '+ localStorage.getItem("kilometers")+'</td> ';
+  document.getElementById("hi-score").innerHTML =  "MEJOR PUNTUACIÓN DE ESTA SESIÓN";
+  document.getElementById("score-row").innerHTML = '<td> ' +"NOMBRE" +  '</td> <td> ' + "CIUDADES"+ '</td> <td> ' + "KILÓMETROS"+ '</td> ' + '</td> <td> ' + "FECHA"+ '</td> ';
+  document.getElementById("top-scorer").innerHTML = '<td> ' + localStorage.getItem("name") + '</td> <td> ' + localStorage.getItem("cities") + '</td> <td> '+ localStorage.getItem("kilometers")+'</td> ' + '<td  > '+ localStorage.getItem("date")+'</td> ';
+  
   } else {
   document.getElementById("hi-score").innerHTML = "Lo siento, no hay ranking ya que tu navegador no soporta almacenamiento web...";
 }
+document.getElementById("hall-fame").innerHTML =  "MEJORES PUNTUACIONES HISTÓRICAS";
+document.getElementById("history-row").innerHTML = '<td> ' +"NOMBRE" +  '</td> <td> ' + "CIUDADES"+ '</td> <td> ' + "KILÓMETROS"+ '</td> ' + '</td> <td> ' + "FECHA"+ '</td> ';
+loadHallOfFame(); 
 </script>
 </body> 
 </html>
+

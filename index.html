@@ -1,290 +1,139 @@
 <!DOCTYPE html>
-<!--[if IE 6]>
-<html id="ie6" class="ancient-ie old-ie no-js" lang="en-US">
-<![endif]-->
-<!--[if IE 7]>
-<html id="ie7" class="ancient-ie old-ie no-js" lang="en-US">
-<![endif]-->
-<!--[if IE 8]>
-<html id="ie8" class="old-ie no-js" lang="en-US">
-<![endif]-->
-<!--[if IE 9]>
-<html id="ie9" class="old-ie9 no-js" lang="en-US">
-<![endif]-->
-<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
-<html lang="en-EN">
-<!--<![endif]-->
-<head> 
-
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<meta name="Author" content="Luis J. Mariscal Fernández" />
-<meta name="Publisher" content="Snk Corp" />
-<meta name="Copyright" content="Snk Corp" />
-<meta name="Keywords" lang="EN" content="map,game,geogame,quiz,online,google,geography,places,mapgame,cities" />
-<meta name="Keywords" lang="DE" content="Karte,Spiel,Quiz,online,google maps,Geografie,Geogame,Plätze" />
-<meta name="Description" lang="EN" content="European cities location quiz is an online map game. Find places with the max accuracy" />
-<meta name="Description" lang="DE" content="European Plätze Quiz ist ein neues online Landkarten Spiel" />
-<meta name="Page-topic" content="Online HTML5 Geogame based on Google Maps API" />
-<meta name="Audience" content="All" />
-<meta name="owner" content="Snk Corp" />
-<meta name="date" content="30-10-2015" />
-<meta name="language" content="EN" />
-<meta name="Content-language" content="EN" />   
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-<title>European cities location quiz</title> 
-   <!--[if lt IE 9]>
-	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-   <![endif]-->
-
-<script src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry" type="text/javascript"></script> 
-
-<style>
-body {font-family: Verdana, sans-serif; font-size:0.8em;}
-header, section, footer, aside, nav, main, article, figure {
-    display: block;
-} 
-header, nav, article, footer
-{border:1px solid grey; margin:5px; padding:8px;text-align:center;}
-h2
-{background-color:LightGrey;border:1px solid grey; margin:5px; padding:3px;text-align:center; }
-h3, button
-{margin:5px; padding:3px;text-align:center;font-weight: bold;}
-nav ul {margin:0; padding:0;}
-nav ul li {display:inline; margin:5px;}
-a[href^="https://maps.google.com/maps"]{display:none !important}
-.gmnoprint a, .gmnoprint span {
-    display:none;
-}
-</style>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"> </script>
-</head> 
-<body> 
-<header>
-  <h1 >European cities location Quiz game</h1>
-</header>
-<section>
-<h2 id="cities-score"> </h2> 
-</script>
-<h2 id="kms-score" > </h2>
-<h3> Select with the right button the location of</h3>
-<h3 id="current-city"> ... <button id="startBtn">Start game</button> </h3>
-  </section>
-   <div id="div1" style="display: none;"></div>
-   <div id="map" style="width: 550px; height: 300px;margin:5px auto;"></div>  
-<script type="text/javascript">  
-   var myCenter=new google.maps.LatLng(51.508742,20.120850);
-   var markers =[]; // list of markers
-     var myStyle = [ { "stylers": [ { "visibility": "off" } ] },{ "featureType": "water", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] },{ "featureType": "administrative.country", "elementType": "geometry", "stylers": [ { "visibility": "on" } ] } ];
-	 var map = new google.maps.Map(document.getElementById('map'), {
-       mapTypeControlOptions: {
-         mapTypeIds: ['mystyle', google.maps.MapTypeId.SATELLITE]
-       },
-       center: myCenter,
-       zoom: 3,
-       mapTypeId: 'mystyle',
-	   disableDefaultUI:true,
-	   zoomControl:true,
-	   zoomControlOptions: {
-		style:google.maps.ZoomControlStyle.SMALL,
-		position:google.maps.ControlPosition.LEFT_BOTTOM
-		}	 
-     });
-
-     map.mapTypes.set('mystyle', new google.maps.StyledMapType(myStyle, { name: 'My Style' }));
-	 map.setTilt(0);
-function initialize()
-{ 
-google.maps.event.addListener(map,'rightclick', function(event) {
-	clearMarkers();
-	placeMarker(event.latLng);
-  });
-}
-function setMapOnAll(map) {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
-  }
-}
-function clearMarkers() {
-  setMapOnAll(null);
-}
-function placeMarker(location) {
-    marker = new google.maps.Marker({
-    position: location,
-    map: map,
-	icon:'marker_flag.png',
-	shadow: 'marker_shadow.png',
-  });
-//var infowindow = new google.maps.InfoWindow({
-//    content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng() });
-//infowindow.open(map,marker); -->
-markers.push(marker);
-// document.getElementById("kms-score").innerHTML = kms + " " + "kilometers left"; 
-}
-function detectBrowser() {
-  var useragent = navigator.userAgent;
-  var mapdiv = document.getElementById("map");
-
-  if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
-    mapdiv.style.width = '100%';
-    mapdiv.style.height = '100%';
-  } else {
-   // mapdiv.style.width = '600px';
-    //mapdiv.style.height = '800px';
-  }
-
-}
-detectBrowser();
-google.maps.event.addDomListener(window, 'load', initialize);
-</script> 
-<section>
-<h3 id="gameStatus">  </h3>
-<h3 id="gameInfo">  </h3>
-</section>
-<aside>
- <!-- aside content goes in here -->
-<h3 id="hi-score">  </h3>
-<h3 id="score-row">  </h3>
-<h3 id="top-scorer">  </h3>
- </aside>
-<footer>
- <p>© 2015 Snk Corp. All rights reserved. Contact information: <a href="mailto:hkm_snk@yahoo.es"> hkm_snk@yahoo.es</a> Version 0.24</p>  
-</footer>
-<script type="text/javascript">
-var kms = 1500;var cities=0; var score = 0; // score, current-city vars
-var txt; // text var
-var maxCities; // maximum cities for the game 
-var goal; // city goal 
-var start, restart; // buttons vars
-var distance; // distance between marker and goal
-var myLine, myGoal; // store line and circle to the city goal
-document.getElementById("cities-score").innerHTML = score + " " + "cities placed";
-document.getElementById("kms-score").innerHTML = kms + " " + "kilometers left"; 
-start = document.getElementById("startBtn");
-start.addEventListener("click", startGame);
-function startGame() {
-$(document).ready(function(){
-    $.getJSON("capitalCities.json", function(result){  
-		$.each(result, function(i, field){
-        $("#current-city").text('"' + field[cities].capitalCity.toString() + '"');
-		goal=new google.maps.LatLng(field[cities].lat,field[cities].long);
-		maxCities= field.length;
-        });
-    });
-});
-document.getElementById("gameStatus").innerHTML = ' <button id="placeBtn" > place</button> ' ; //style="float":right; margin-right: 490px 
-start = document.getElementById("placeBtn");
-start.addEventListener("click", checkLocation);
-}
-function checkLocation() {
-var live =0; // flag if continue playing
-var diff; // store kms left, aux var, useless
-if (markers.length == 0) { // no markers on map
-	document.getElementById("gameInfo").innerHTML = "Check the button only when the flag is placed";
-} else {
-map.setZoom(7);
-map.setCenter(goal);
-myGoal = new google.maps.Circle({
-  center:goal,
-  radius:50000,
-  strokeColor:"grey",
-  strokeOpacity:0.2,
-  strokeWeight:2,
-  fillColor:"grey",
-  fillOpacity:0.4
-  });
-myGoal.setMap(map);
-myLine = new google.maps.Polygon({
-    paths: [
-      goal,
-      markers[markers.length-1].position,     
-    ]
-  });
-myLine.setMap(map);
-distance = google.maps.geometry.spherical.computeDistanceBetween(goal,markers[markers.length-1].position);
-document.getElementById("gameStatus").innerHTML = "Your marker is "+ (distance / 1000).toFixed(3) +" kilometers away from your goal" ; 
-var diff = (kms - (distance/1000)); // remember to convert distnce to kms
-kms=diff.toFixed(3); 
-if (cities == maxCities-1) { // finish game, locate all the cities
-	cities++;
-	if (distance <= 50000) { // last city scored
-		txt= "Congratulations!! You achieve the last city location " + '<button id="restartBtn" > Restart game </button> ';
-		score++;
-		//checkScore();// check hi-score
-	} else { // miss last city location
-		txt="Felicitations!! You achieve to complete the game " + '<button id="restartBtn" > Restart game </button> ';
-		//checkScore();// check hi-score
-	}
-} else {
-	cities++;
-	if ((distance <= 50000) && (kms >= 0)){ // complete success
-		txt= "Well done!! You achieve a city location " + '<button id="nextBtn" > Next round </button> ';
-		score++; live++;
-	} else if ((distance <= 50000) && (kms < 0)) { // city scored, but no kms left... game over
-		txt= "Good job!! You achieve a city location but no kilometers left. GAME OVER " + '<button id="restartBtn" > Restart game </button> ';
-		score++;
-		//checkScore();// check hi-score 
-	} else if ((distance > 50000) && (kms > 0)) { // city fail, still kms left, game continues 
-		txt= "Missed!! But get lucky for the next city location " + '<button id="nextBtn" > Next round </button> ';
-		live++;
-	} else {  // no kms left, game over
-		txt= "Sorry. No kilometers left. GAME OVER " + '<button id="restartBtn" > Restart game </button> ';
-		//checkScore();// check hi-score
-	}
-}	
-document.getElementById("gameInfo").innerHTML = txt;
-document.getElementById("cities-score").innerHTML = score + " " + "cities placed, still left: " + (maxCities-cities);
-document.getElementById("kms-score").innerHTML = kms + " " + "kilometers left"; 
-if (live) {
-	start = document.getElementById("nextBtn");
-	start.addEventListener("click", clearGame);
-} else {
-	restart = document.getElementById("restartBtn");
-	restart.addEventListener("click", reloadGame);
-	}
-}	
-}
-function reloadGame() {
-//document.getElementById("gameInfo").innerHTML = "Inside reload function";
-//history.go(0);
-window.location.reload();
-}
-function clearGame() {
-document.getElementById("gameInfo").innerHTML = " ";
-map.setZoom(3);
-map.setCenter(myCenter);
-myGoal.setMap(null);
-myLine.setMap(null);
-startGame();
-}
-function checkScore() {
-if (typeof(Storage) !== "undefined") {
-    // Check
-    if ((localStorage.getItem("cities") < score) || ((localStorage.getItem("cities") == score) && (localStorage.getItem("kilometers") < kms))) {
-		document.getElementById("hi-score").innerHTML = "NEW HI-SCORE!!";
-		document.getElementById("score-row").innerHTML = '<form action="">Enter your name: <input id = "i-name" type="text" name="name" maxlength="9"></form>';
-		// Store
-		localStorage.setItem("cities", score);
-		localStorage.setItem("kilometers", kms);
-		localStorage.setItem("name", document.getElementById("i-name").innerHTML);
-    } else {
-    document.getElementById("hi-score").innerHTML = "Sorry, no Hi-Score as your browser does not support Web Storage...";
-}
-}
-}
-// Check browser support
-//if (typeof(Storage) !== "undefined") {
-    // Store
-  //  localStorage.setItem("name", "Snk");
-//	localStorage.setItem("cities", "0");
-	//localStorage.setItem("kilometres", "0");
-    // Retrieve
-    //document.getElementById("hi-score").innerHTML = "HI-SCORE";
-	//document.getElementById("score-row").innerHTML = "NAME   CITIES  KILOMETERS";
-	//document.getElementById("top-scorer").innerHTML = localStorage.getItem("name") +"   " + localStorage.getItem("cities") + "   "+ localStorage.getItem("kilometres");
-//} else {
-  //  document.getElementById("hi-score").innerHTML = "Sorry, no Hi-Score as your browser does not support Web Storage...";
-//}
-</script>
-</body> 
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="Author" content="Luis J. Mariscal Fernández" />
+    <meta name="Publisher" content="Snk Corp" />
+    <meta name="Copyright" content="Snk Corp" />
+    <meta name="Keywords" lang="EN" content="map,game,geogame,quiz,online,google,geography,places,mapgame,cities,Europe,European" />
+    <meta name="Keywords" lang="ES" content="mapa,game,juego,geojuego,quiz,online,google maps,geografia,mapgame,ciudades,Europa,europeas" />
+    <meta name="Keywords" lang="DE" content="Karte,Spiel,Quiz,online,google maps,Geografie,Geogame,Plätze,Europe,europäisch" />
+    <meta name="Description" lang="EN" content="European cities location quiz is an online map game | Find places with the max accuracy" />
+    <meta name="Description" lang="ES" content="Juego de localizar ciudades europeas sobre el mapa en línea | Mide tus conocimientos geográficos" />
+    <meta name="Description" lang="DE" content="European Plätze Quiz ist ein neues online Landkarten Spiel" />
+    <meta name="Page-topic" content="Online HTML5 Geogame based on Google Maps API" />
+    <meta name="Audience" content="All" />
+    <meta name="owner" content="Snk Corp" />
+    <meta name="date" content="11-11-2015" />
+    <meta name="language" content="en-EN" />
+    <meta name="Content-language" content="en-EN" />   
+    <title> European cities location quiz </title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"> 
+	<script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script> 
+	<script src="http://maps.google.com/maps/api/js?v3&libraries=geometry" type="text/javascript"></script>
+	<noscript><h2>Sorry, your browser does not support JavaScript! and itt is required for this page</h2></noscript>
+	<!-- <script src="js/g-maps.js"></script> -->
+	<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+	<style>
+	  h2 {background-color: LightGrey; border:1px solid grey; }
+	  a[href^="https://maps.google.com/maps"]{display:none !important}
+	  .gmnoprint a, .gmnoprint span {
+		display:none;
+	  }
+	  blink, .blink {
+		-webkit-animation: blink 1s step-end infinite;
+		-moz-animation: blink 1s step-end infinite;
+		-o-animation: blink 1s step-end infinite;
+		animation: blink 1s step-end infinite;
+		}
+	  @-webkit-keyframes blink {
+		67% { opacity: 0 }
+	  }
+	  @-moz-keyframes blink {
+		67% { opacity: 0 }
+	  }
+	  @-o-keyframes blink {
+		67% { opacity: 0 }
+	  }
+	  @keyframes blink {
+		67% { opacity: 0 }
+	</style>
+  </head>
+  <body>
+    <header class="well">
+	  <div class="row-fluid">
+        <div class="span2"> </div>
+        <div class="span10">
+		  <h1> European cities location Quiz game </h1>
+		</div>
+      </div>
+	</header>
+	<section class="text-center">
+	  <div class="row-fluid">
+	    <div class="span2"> </div>
+        <div class="span8">
+		  <h2 id="cities-score"> </h2> 
+		  <h2 id="kms-score" > </h2>
+	    </div>
+	  </div>
+	</section>
+	<article class="text-center">
+	  <div class="row-fluid">
+	    <div class="span2"> </div>
+        <div class="span8">
+	      <h3> Select with simple mouse click the location of </h3>
+	      <h3 id="current-city" > ... <button  class="btn" id="startBtn"> Start game &nbsp;<i class="icon-eye-open"></i> </button> </h3>
+	    </div>
+	  </div>
+	    <div class="row-fluid">
+	      <div class="span2"> </div>
+          <div class="span8">
+			<div id="map" class="img-rounded center-block" style="margin:0 auto;" ></div>
+			<h3 id="gameStatus">  </h3>
+			<h3 id="gameInfo">  </h3>
+			<blink> <h3 id="new-hi"> </h3> </blink>
+			<h3 id="score-form"> </h3>
+		  </div>	
+		  <div class="span2">
+			<!-- old aside hi-scores section -->
+		  </div>
+		</div>
+	</article>
+	    </div>
+	<article class="text-center">	
+	    <div class="row-fluid">
+	      <div class="span3"> </div>
+          <div class="span6">
+		  <h5 id="hi-score" > </h5>
+			  <table id="hi-table" class="table table-bordered table-condensed">
+				<tr id="score-row" > </tr> 
+				<tr id="top-scorer">  </tr>
+			  </table>  
+			  <h5 id="hall-fame" > </h5>
+				<table id="history" class="table table-bordered table-condensed table-striped">
+				  <tr id="history-row" style="text-align:left"> </tr> 
+				  <tr id="top-1">  </tr> <tr id="top-2">  </tr> <tr id="top-3">  </tr> <tr id="top-4">  </tr> <tr id="top-5">  </tr> <tr id="top-6">  </tr> <tr id="top-7">  </tr>
+				 <tr id="top-8">  </tr> <tr id="top-9">  </tr> <tr id="top-10">  </tr>
+				</table> 
+		  </div>
+		</div>
+	</article>	  
+	<!-- Modal -->
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" id= "close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">Information</h3>
+		</div>
+		<div class="modal-body">
+			<p> Hall of Fame table updated... </p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" id = "close" data-dismiss="modal" aria-hidden="true">Close</button>
+		</div>
+	</div>
+	<footer class ="well text-center">
+	  <div class="row-fluid">
+	    <div class="span2"> </div>
+  	    <div class="span8">
+	     <p class="muted">© 2015 Snk Corp. All rights reserved. Contact information:  <a class="muted" href="mailto:hkm_snk@yahoo.es"> hkm_snk@yahoo.es</a> Version 0.29</p>  	  
+	    </div>
+	  </div>
+	</footer>
+	<script src="js/g-maps-en.js"></script> 
+	<script src="js/map-quiz-en.js"></script> 
+ </body>
 </html>
