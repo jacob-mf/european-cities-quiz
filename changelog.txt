@@ -33,4 +33,11 @@ https://www.google.com/webmasters/tools/mobile-friendly/?url=http%3A%2F%2Flocate
 http://locate-european-cities-quiz.eu.pn/index.html
 http://locate-european-cities-quiz.eu.pn/index_boot-en.html
 http://cp1.freehostingeu.com/beta/login/?next=file-manager&notice=login
+0.31 join Spanish, English versions by links; 12-1-2016
+default hi-score initial list; 200x200 if cell phone OS detected
+0.32 upload version, check
+up to 13 chars hi-score name; no custom flag marker; header: quiz not capital letter
+when press save, no good enter (less than 3 chars) Spanish message, modal appears? 
+0.33 fix problem with savng bad formatted names
+translate cities names correctly to Spanish 
 Luis J. Mariscal jacob_mf@yahoo.es

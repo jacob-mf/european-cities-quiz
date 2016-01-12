@@ -58,8 +58,8 @@ function detectBrowser() {
   var mapdiv = document.getElementById("map");
 
   if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
-    mapdiv.style.width = '100%';
-    mapdiv.style.height = '100%';
+    mapdiv.style.width =  '200px'; // '100%';
+    mapdiv.style.height = '200px'; //'100%';
   } else {
     mapdiv.style.width = '470px';
     mapdiv.style.height = '330px';

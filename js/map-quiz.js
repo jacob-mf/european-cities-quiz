@@ -116,7 +116,7 @@ if (live) {
 }
 function startGame() {
 $(document).ready(function(){
-    $.getJSON("../js/capitalCities.json", function(result){  
+    $.getJSON("../js/capitalCities-es.json", function(result){  
 		$.each(result, function(i, field){
         $("#current-city").text('"' + field[cities].capitalCity.toString() + '"');
 		goal=new google.maps.LatLng(field[cities].lat,field[cities].long);
@@ -267,7 +267,7 @@ if (typeof(Storage) !== "undefined") {
 		  document.getElementById("new-hi").innerHTML = "¡¡Nuevo record de todos los tiempos y de esta sesión!!";
 		  topB = 1;
 		} else  document.getElementById("new-hi").innerHTML = "¡¡Nuevo record de esta sesión!!";
-		document.getElementById("score-form").innerHTML = '<form NAME="myForm" onSubmit="return myFunctionName()" > <div class="input-append"> <input id="i-name" type="text" placeholder="Nombre..." name="iname"  pattern=".{3,}"  required title="Escribe entre 3-9 caracteres" maxlength="9"> <button class="btn" id="getNameBtn" data-loading-text="Salvando..." onclick="getName(topB)" > Salvar &nbsp;<i class="icon-user"></i></button> </div></form> ';
+		document.getElementById("score-form").innerHTML = '<form NAME="myForm" onSubmit="return myFunctionName()" > <div class="input-append"> <input id="i-name" type="text" placeholder="Nombre..." name="iname"  pattern=".{3,}"  required title="Escribe entre 3-13 caracteres" maxlength="13"> <button class="btn" id="getNameBtn" data-loading-text="Salvando..." onclick="getName(topB)" > Salvar &nbsp;<i class="icon-user"></i></button> </div></form> ';
 		//document.getElementById("score-form").innerHTML = '<form id = "f-name" action=""> Nombre: <input id="i-name" type="text" name="i-name"  pattern=".{3,}"  required title="Escribe entre 3-9 caracteres" maxlength="9"> <button class="btn" id="getNameBtn" data-loading-text="Salvando..." onclick="getName(topB)" > Salvar &nbsp;<i class="icon-user"></i></button> </form> ';
 		//$("#restartBtn").prop('disabled', true);// deactivate restart button
 		// Store
@@ -284,7 +284,7 @@ if (typeof(Storage) !== "undefined") {
 		    //$("#restartBtn").prop('disabled', true);// deactivate restart button
 		    topB = 1; // not neccessary, anyway
 			document.getElementById("new-hi").innerHTML = "¡¡Nuevo record de todos los tiempos!!";
-		    document.getElementById("score-form").innerHTML = '<form id = "f-name" NAME="myForm" onSubmit="return myFunctionName()"> <input id="g-name" type="text" placeholder="Nombre..." name="i-name"  pattern=".{3,}"  required title="Escribe entre 3-9 caracteres" maxlength="9"> <button class="btn" id="getNameBtn" data-loading-text="Salvando..." onclick="getNameGlobal()" > Salvar &nbsp;<i class="icon-user"></i></button> </form> ';
+		    document.getElementById("score-form").innerHTML = '<form id = "f-name" NAME="myForm" onSubmit="return myFunctionName()"> <input id="g-name" type="text" placeholder="Nombre..." name="i-name"  pattern=".{3,}"  required title="Escribe entre 3-13 caracteres" maxlength="13"> <button class="btn" id="getNameBtn" data-loading-text="Salvando..." onclick="getNameGlobal()" > Salvar &nbsp;<i class="icon-user"></i></button> </form> ';
 		    //var gname = document.getElementById("i-name").value;
 		    
 			} //else storeRecord(topGlobal); // store player in the hall of fame

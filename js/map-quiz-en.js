@@ -164,6 +164,7 @@ return false;
 }
 function getName(b) {
 topGlobal = document.getElementById("i-name").value;
+if ((topGlobal.length() >= 3) && (topGlobal.length() <= 13)) { // valid player name
 // Store
 localStorage.setItem("name", topGlobal);
 localStorage.setItem("cities", score);
@@ -176,10 +177,12 @@ $("#getNameButton").click(function(event) {
 if (b) { // enter the Hall of Fame	
 	storeRecord(topGlobal); // store player in the hall of fame
 	}
+} else 
 return false;	
 }
 function getNameGlobal() {
 topGlobal = document.getElementById("g-name").value;
+if ((topGlobal.length() >= 3) && (topGlobal.length() <= 13)) { // valid player name
 //localStorage.setItem("name", top);
 // disable "disabled" buttons
 $("#getNameButton").click(function(event) {
@@ -187,6 +190,7 @@ $("#getNameButton").click(function(event) {
     return(false);
 });
 storeRecord(topGlobal); // store player in the hall of fame
+} else 
 return false;
 }
 function getDate(){
@@ -305,7 +309,7 @@ if (typeof(Storage) !== "undefined") {
 		  document.getElementById("new-hi").innerHTML = "NEW HI-SCORE!! Session and Hall of Fame entrance";
 		  topB = 1;
 		} else  document.getElementById("new-hi").innerHTML = "NEW HI-SCORE!! Session best";
-		document.getElementById("score-form").innerHTML = '<form NAME="myForm" onSubmit="return myFunctionName()" > <div class="input-append"> <input id="i-name" type="text" placeholder="Name" name="iname"  pattern=".{3,}"  required title="Enter 3-9 characters" maxlength="9"> <button class="btn" id="getNameBtn" data-loading-text="Saving..." onclick="getName(topB)" > Save &nbsp;<i class="icon-user"></i></button> </div></form> ';
+		document.getElementById("score-form").innerHTML = '<form NAME="myForm" onSubmit="return myFunctionName()" > <div class="input-append"> <input id="i-name" type="text" placeholder="Name" name="iname"  pattern=".{3,}"  required title="Enter 3-13 characters" maxlength="13"> <button class="btn" id="getNameBtn" data-loading-text="Saving..." onclick="getName(topB)" > Save &nbsp;<i class="icon-user"></i></button> </div></form> ';
 		//$("#restartBtn").prop('disabled', true);// deactivate restart button
     } else { // no session best
 		if ((lowScore.cities < score) || ((lowScore.cities == score) && (isLess(lowScore.kms ,kms)))) { // enter on the hall of fame
@@ -313,7 +317,7 @@ if (typeof(Storage) !== "undefined") {
 		    //$("#restartBtn").prop('disabled', true);// deactivate restart button
 		    topB = 1; // not neccessary, anyway
 			document.getElementById("new-hi").innerHTML = "ENTER THE HALL OF FAME!!";
-		    document.getElementById("score-form").innerHTML = '<form NAME="myForm" onSubmit="return myFunctionName()" >  <div class="input-append"> <input id="g-name" type="text" placeholder="Name" name="iname"  pattern=".{3,}"  required title="Enter 3-9 characters" maxlength="9"> <button class="btn" id="getNameBtn" data-loading-text="Saving..." onclick="getNameGlobal()" > Save &nbsp;<i class="icon-user"></i></button> </div> </form> ';
+		    document.getElementById("score-form").innerHTML = '<form NAME="myForm" onSubmit="return myFunctionName()" >  <div class="input-append"> <input id="g-name" type="text" placeholder="Name" name="iname"  pattern=".{3,}"  required title="Enter 3-13 characters" maxlength="13"> <button class="btn" id="getNameBtn" data-loading-text="Saving..." onclick="getNameGlobal()" > Save &nbsp;<i class="icon-user"></i></button> </div> </form> ';
 		   	} 
 		} else { // no hi-scores
 			document.getElementById("score-form").innerHTML = '<button id="restartBtn" class="btn" > Restart game &nbsp;<i class="icon-refresh"></i></button> ';
