@@ -160,6 +160,7 @@ $(document).ready(function(){
 }
 function getName(b) {
 topGlobal = document.getElementById("i-name").value;
+if ((topGlobal.length >= 3) && (topGlobal.length <= 13)) { // valid player name
 // Store
 localStorage.setItem("name", topGlobal);
 localStorage.setItem("cities", score);
@@ -173,15 +174,18 @@ if (b) { // enter the Hall of Fame
 	
 	storeRecord(topGlobal); // store player in the hall of fame
 	}
+} else return false;
 }
 function getNameGlobal() {
 topGlobal = document.getElementById("g-name").value;
+if ((topGlobal.length >= 3) && (topGlobal.length <= 13)) { // valid player name
 //localStorage.setItem("name", top);
 $("#getNameButton").click(function(event) {
     event.stopImmediatePropagation();
     return(false);
 });
 storeRecord(topGlobal); // store player in the hall of fame
+} else return false;
 }
 function getDate(){
 var date = new Date();

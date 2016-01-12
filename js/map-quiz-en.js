@@ -164,7 +164,7 @@ return false;
 }
 function getName(b) {
 topGlobal = document.getElementById("i-name").value;
-if ((topGlobal.length() >= 3) && (topGlobal.length() <= 13)) { // valid player name
+if ((topGlobal.length >= 3) && (topGlobal.length <= 13)) { // valid player name
 // Store
 localStorage.setItem("name", topGlobal);
 localStorage.setItem("cities", score);
@@ -177,12 +177,12 @@ $("#getNameButton").click(function(event) {
 if (b) { // enter the Hall of Fame	
 	storeRecord(topGlobal); // store player in the hall of fame
 	}
-} else 
+} else {;}
 return false;	
 }
 function getNameGlobal() {
 topGlobal = document.getElementById("g-name").value;
-if ((topGlobal.length() >= 3) && (topGlobal.length() <= 13)) { // valid player name
+if ((topGlobal.length >= 3) && (topGlobal.length <= 13)) { // valid player name
 //localStorage.setItem("name", top);
 // disable "disabled" buttons
 $("#getNameButton").click(function(event) {
@@ -190,7 +190,7 @@ $("#getNameButton").click(function(event) {
     return(false);
 });
 storeRecord(topGlobal); // store player in the hall of fame
-} else 
+} else {;}
 return false;
 }
 function getDate(){
