@@ -6,4 +6,4 @@ Spanish version(more difficult,no country borders) developed on folder /es
 
 Cell phone support is not tested properly
 
-[ ] Check Spanish versions info & help warning when entering a hi-score
+- [ ] Check Spanish versions info & help warning when entering a hi-score
