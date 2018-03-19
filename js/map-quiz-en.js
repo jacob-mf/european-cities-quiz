@@ -3,18 +3,13 @@
 * game control of the location European cities quiz webpage
 * Copyright 2015 Snk corp.
 */
-var kms = 1500; var cities = 0; var score = 0; // score, current-city vars
-//var txt; // text var
-var start; // button var
-var lowScore; // hall of fame lowest score
-var maxPLayers; // hall of fame places
-//var topPlayers; // hal of fame JSON data type
+var kms = 1500; var cities = 0; var score = 0; // score, current-city vars //var txt; // text var
+var start; var lowScore; // button var, hall of fame lowest score
+var maxPLayers; // hall of fame places; //var topPlayers; // hal of fame JSON data type
 var hallJson; // JSON var hall of fame
 var myLine, myGoal; // store line and circle to the city goal
-var goal; // city goal 
-var maxCities; // maximum cities for the game 
-var topB = 0; // boolean, define if enter on the hall of fame
-var topGlobal; // actual top gamer
+var goal; var maxCities;  // city goal ;// maximum cities for the game 
+var topB = 0; var topGlobal; // boolean, define if enter on the hall of fame // actual top gamer
 checkStorage();
 loadHallOfFame();
 document.getElementById("cities-score").innerHTML = score + " cities placed";
@@ -40,10 +35,8 @@ window.location.reload();
 return false;
 }
 function checkLocation() {
-var live = 0; // flag if continue playing
-var diff; // store kms left, aux var, useless
-var txt; // text var
-var distance; // distance between marker and goal
+var live = 0, diff; // flag if continue playing; store kms left, aux var, useless
+var txt, distance; // text var, distance between marker and goal
 
 if (markers.length == 0) { // no markers on map
 	document.getElementById("gameInfo").innerHTML = "Check the button only when the flag is placed";
@@ -75,17 +68,25 @@ if (markers.length == 0) { // no markers on map
 	var diff = (kms - (distance / 1000)); // remember to convert disatnce to kms
 	kms = diff.toFixed(3); 
 	if (cities == maxCities-1) { // finish game, locate all the cities
-		cities++;
-		if (distance <= 50000) { // last city scored
-			txt= "Congratulations!! You achieve the last city location "; //+ '<button id="restartBtn" class="btn" > Restart game &nbsp;<i class="refresh"></i></button> ';
-			score++;
-			checkScore();// check hi-score
-		} else { // miss last city location
-			txt="Felicitations!! You achieve to complete the game "; //'<button id="restartBtn" class="btn" > Restart game &nbsp;<i class="refresh"></i> </button> ';
-			checkScore();// check hi-score
-	}
+		finishGame(distance, txt);
 } else {
-	cities++;
+	checkMarker(distance, txt, live);
+}	
+document.getElementById("gameInfo").innerHTML = txt;
+document.getElementById("cities-score").innerHTML = score + " cities placed well, still left: " + (maxCities-cities);
+document.getElementById("kms-score").innerHTML = kms + " kilometers left"; 
+if (live) {
+	start.removeEventListener ("click", checkLocation, false);
+	start = document.getElementById("nextBtn");
+	start.addEventListener("click", clearGame);
+} else {
+	//restart = document.getElementById("restartBtn");	//restart.addEventListener("click", reloadGame);
+	}
+}
+return false;	
+}
+function checkMarker(distance, txt, live) { 
+  cities++;
 	if ((distance <= 50000) && (kms >= 0)){ // complete success
 		txt= "Well done!! You achieve a city location " + '<button id="nextBtn" class="btn" > Next round &nbsp;<i class="icon-step-forward"></i></button> ';
 		score++; live++;
@@ -101,19 +102,16 @@ if (markers.length == 0) { // no markers on map
 		checkScore();// check hi-score
 	}
 }	
-document.getElementById("gameInfo").innerHTML = txt;
-document.getElementById("cities-score").innerHTML = score + " cities placed well, still left: " + (maxCities-cities);
-document.getElementById("kms-score").innerHTML = kms + " kilometers left"; 
-if (live) {
-	start.removeEventListener ("click", checkLocation, false);
-	start = document.getElementById("nextBtn");
-	start.addEventListener("click", clearGame);
-} else {
-	//restart = document.getElementById("restartBtn");
-	//restart.addEventListener("click", reloadGame);
-	}
-}
-return false;	
+function finishGame(distance, txt) {
+	cities++;
+		if (distance <= 50000) { // last city scored
+			txt= "Congratulations!! You achieve the last city location "; //+ '<button id="restartBtn" class="btn" > Restart game &nbsp;<i class="refresh"></i></button> ';
+			score++;
+			checkScore();// check hi-score
+		} else { // miss last city location
+			txt="Felicitations!! You achieve to complete the game "; //'<button id="restartBtn" class="btn" > Restart game &nbsp;<i class="refresh"></i> </button> ';
+			checkScore();// check hi-score
+	}	
 }
 function startGame() {
 $(document).ready(function() {
@@ -217,10 +215,8 @@ while (!placed) {
 			pos--;
 		else { // 1st place, pos == 0
 			//topPlayers[pos].cities = score;
-			hallJson.hallOfFame[pos].cities= score.toString(); 
-			hallJson.hallOfFame[pos].kms= kms;
-			hallJson.hallOfFame[pos].date= getDate();
-			hallJson.hallOfFame[pos].name= name;
+			hallJsonWrite(pos);
+			
 			//topPlayers[pos].kms = kms;
 			//topPlayers[pos].name = name;
 			//topPlayers[pos].date =getDate();
@@ -228,10 +224,11 @@ while (!placed) {
 			placed = 1;
 	    }
 	} else { // found the correct place
-	   hallJson.hallOfFame[pos+1].cities = score.toString();
-	   hallJson.hallOfFame[pos+1].kms = kms;
-	   hallJson.hallOfFame[pos+1].name = name;
-	   hallJson.hallOfFame[pos+1].date =getDate();
+	   hallJsonWrite(pos+1);
+	   //hallJson.hallOfFame[pos+1].cities = score.toString();
+	   //hallJson.hallOfFame[pos+1].kms = kms;
+	   //hallJson.hallOfFame[pos+1].name = name;
+	   //hallJson.hallOfFame[pos+1].date =getDate();
 	   console.log("Found place. Worse than pos:"+ pos + " score: " + score + " kms: " + kms );
 	   placed = 1;
 	}
@@ -278,6 +275,12 @@ $(document).ready(function(){
 showModal();
 return false;
 }
+function hallJsonWrite(pos) {
+	hallJson.hallOfFame[pos].cities= score.toString(); 
+	hallJson.hallOfFame[pos].kms= kms;
+	hallJson.hallOfFame[pos].date= getDate();
+	hallJson.hallOfFame[pos].name= name;
+}
 function showModal() {
 //$(document).ready(function(){	
    //$.ajax({ //e.preventDefault();
@@ -315,8 +318,7 @@ if (typeof(Storage) !== "undefined") {
 		if ((lowScore.cities < score) || ((lowScore.cities == score) && (isLess(lowScore.kms ,kms)))) { // enter on the hall of fame
 		  if (topB == 0) { // not detected before
 		    //$("#restartBtn").prop('disabled', true);// deactivate restart button
-		    topB = 1; // not neccessary, anyway
-			document.getElementById("new-hi").innerHTML = "ENTER THE HALL OF FAME!!";
+			document.getElementById("new-hi").innerHTML = "ENTER THE HALL OF FAME!!"; topB = 1; // not neccessary, anyway
 		    document.getElementById("score-form").innerHTML = '<form NAME="myForm" onSubmit="return myFunctionName()" >  <div class="input-append"> <input id="g-name" type="text" placeholder="Name" name="iname"  pattern=".{3,}"  required title="Enter 3-13 characters" maxlength="13"> <button class="btn" id="getNameBtn" data-loading-text="Saving..." onclick="getNameGlobal()" > Save &nbsp;<i class="icon-user"></i></button> </div> </form> ';
 		   	} 
 		} else { // no hi-scores

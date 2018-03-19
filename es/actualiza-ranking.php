@@ -33,7 +33,7 @@
 	//$path= "file://js/js-test.txt";
 	echo json_encode($return);
 	if (json_decode($return['json']) != null) { /* sanity check */
-    $file = fopen('/home/www/locate-european-cities-quiz.eu.pn/js/hallOfFame.json','w+') or die("Unable to open fav JSON file");
+    $file = fopen('/home/www/locate-european-cities-quiz.eu3.biz/js/hallOfFame.json','w+') or die("Unable to open fav JSON file");
     fwrite($file, $return['json']);
     fclose($file);
 	die("Edit JSON file successfuly");
