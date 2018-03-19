@@ -42,10 +42,8 @@ window.location.reload();
 return false;
 }
 function checkLocation() {
-var live =0; // flag if continue playing
-var diff; // store kms left, aux var, useless
-var txt; // text var
-var distance; // distance between marker and goal
+var live =0, diff; // flag if continue playing, store kms left, aux var, useless
+var txt , distance; // text var, distance between marker and goal
 if (markers.length == 0) { // no markers on map
 	document.getElementById("gameInfo").innerHTML = "Pulsa el botón de comprobar sólo cuando hayas colocado el marcador adecuadamente";
 } else {
@@ -76,17 +74,25 @@ document.getElementById("gameStatus").innerHTML = "Quedaste a "+ (distance / 100
 var diff = (kms - (distance/1000)); // remember to convert disatnce to kms
 kms=diff.toFixed(3); 
 if (cities == maxCities-1) { // finish game, locate all the cities
-	cities++;
-	if (distance <= 50000) { // last city scored
-		txt= "¡¡Enhorabuena!! Acertaste la última ciudad del juego "; // + '<button id="restartBtn" class="btn" > Reiniciar juego &nbsp;<i class="refresh"></i></button> ';
-		score++;
-		checkScore();// check hi-score
-	} else { // miss last city location
-		txt="¡¡Felicidades!! Completaste el juego "; // + '<button id="restartBtn" class="btn" > Reiniciar juego &nbsp;<i class="refresh"></i> </button> ';
-		checkScore();// check hi-score
-	}
+	txt = finishGame(distance);	
 } else {
-	cities++;
+	var aux = checkMarker(distance,live)
+	txt = aux[0]; live = aux[1];
+}	
+document.getElementById("gameInfo").innerHTML = txt;
+document.getElementById("cities-score").innerHTML = score + " " + "ciudades bien colocadas, quedan: " + (maxCities-cities);
+document.getElementById("kms-score").innerHTML = kms + " " + "kilómetros de margen"; 
+if (live) {
+	start = document.getElementById("nextBtn");
+	start.addEventListener("click", clearGame);
+} else {
+	//restart = document.getElementById("restartBtn");
+	//restart.addEventListener("click", reloadGame);
+	}
+}	
+}
+function checkMarker(distance, live) {
+	cities++; var aux; var txt;
 	if ((distance <= 50000) && (kms >= 0)){ // complete success
 		txt= "¡¡Bien hecho!! Situaste correctamente la ciudad " + '<button id="nextBtn" class="btn" > Siguiente ciudad &nbsp;<i class="icon-step-forward"></i></button> ';
 		score++; live++;
@@ -101,19 +107,22 @@ if (cities == maxCities-1) { // finish game, locate all the cities
 		txt= "Lo sentimos. Te quedaste sin margen de kilómetros. FIN "; //+ '<button id="restartBtn" class="btn" > Reiniciar juego &nbsp;<i class="icon-refresh"></i></button> ';
 		checkScore();// check hi-score
 	}
+	aux[0] = txt; aux[1] = live;
+	return aux;
 }	
-document.getElementById("gameInfo").innerHTML = txt;
-document.getElementById("cities-score").innerHTML = score + " " + "ciudades bien colocadas, quedan: " + (maxCities-cities);
-document.getElementById("kms-score").innerHTML = kms + " " + "kilómetros de margen"; 
-if (live) {
-	start = document.getElementById("nextBtn");
-	start.addEventListener("click", clearGame);
-} else {
-	//restart = document.getElementById("restartBtn");
-	//restart.addEventListener("click", reloadGame);
+function finishGame(distance) {
+	cities++;
+	var txt;
+	if (distance <= 50000) { // last city scored
+		txt= "¡¡Enhorabuena!! Acertaste la última ciudad del juego "; // + '<button id="restartBtn" class="btn" > Reiniciar juego &nbsp;<i class="refresh"></i></button> ';
+		score++;
+		checkScore();// check hi-score
+	} else { // miss last city location
+		txt="¡¡Felicidades!! Completaste el juego "; // + '<button id="restartBtn" class="btn" > Reiniciar juego &nbsp;<i class="refresh"></i> </button> ';
+		checkScore();// check hi-score
 	}
+	return txt;
 }	
-}
 function startGame() {
 $(document).ready(function(){
     $.getJSON("../js/capitalCities-es.json", function(result){  
